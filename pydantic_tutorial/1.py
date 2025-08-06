@@ -22,5 +22,6 @@ def get_patient_info(patient1 : Patient):
 
 print(get_patient_info(patient1))
 
-patient2 = Patient(name="New John", age='Thirty')
-print(get_patient_info(patient2))  # This will raise a validation error because age is not an int
+patient2 = Patient(name="New John", age = '30') # pydantic will convert '30' to int
+print(get_patient_info(patient2))  
+
