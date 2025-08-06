@@ -51,6 +51,7 @@ patient_info = {
     "allergies": ["dust", "pollens"],
     "married": False,
     "contact_details": {
+        "emergency_contact": "9876543210",
         "phone": "123-456-7890"
     }
 }
