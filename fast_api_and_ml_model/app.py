@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, field_validator
 from typing import Annotated, Literal
 import pickle
 import pandas as pd
@@ -69,7 +69,17 @@ class UserInput(BaseModel):
             return "middle_aged"
         return "senior"
         
+    @field_validator('city')
+    @classmethod
+    def validate_city(cls, value):
+        if not value.isalpha():
+            raise HTTPException(status_code=400, detail='City name must contain only alphabetic characters')
+        return value.strip().title()
         
+        
+@app.get('/')
+def home():
+    return JSONResponse(status_code = 200, content = {'message': 'Welcome to Insurance Premium Prediction API.'})
 # post route for the model
 @app.post('/predict')
 def predict_insurance_premium(data: UserInput): 
